@@ -19,10 +19,19 @@ and reviewers on request, and the checksums below allow them to be verified.
 | clean disjoint replication | `PREREG_2_replication.md` | `d9b97962b6f532a39e6d6a80cc30a08da3e8e6eaca65b59f614cbe8ab73008ce` |
 | holdout, significance, references, domain | `PREREG_3_holdout_and_robustness.md` | `a49548b16da783321cf65194674b8ab43a83bf989c3715a509fcbb2196945a8a` |
 | channel confirmation | `PREREG_4_channel_confirmation.md` | `4934731f91a410290569873f30ee9c922a3107adf717a7210cf3512050b872ea` |
+| analyses added in revision | `PREREG_5_revision_analyses.md` | `c74069634c93c065133340eef809304f06511287ab59188e0d9187cebe79fb6d` |
+| analysis script of the revision analyses | `code/revision_analyses.py` (see below) | `1e48f35b4fa86524266781c7255420b256419f507acf9297341b0805dff8a7e4` |
 
 The analysis code that produced the original results read the checksum of its
 own analysis plan at run time and refused to run if it did not match; the
 checksums were also written into the result records.
+
+The revision plan and its analysis script were hash-locked together before the
+analyses were run. `code/revision_analyses.py` is the locked script with comments
+and messages in English and with the input and output locations given as
+arguments instead of fixed local paths; the computations, constants, seeds and
+order of random draws are unchanged. It reproduces the locked run's results
+exactly; `results/revision_analyses.json` was written by it.
 
 ## What was changed in preparing the renderings
 

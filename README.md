@@ -3,7 +3,8 @@
 Code, analysis plans and machine-written results for the manuscript
 
 > J. L. Jensen, *Kinematic orientation and dynamical redistribution of
-> vorticity–strain alignment currents in turbulence* (submitted).
+> vorticity–strain alignment currents in turbulence*, submitted to Open Transport (2026).
+> Preprint: https://doi.org/10.5281/zenodo.23417576
 
 The study measures the pairwise currents between the vorticity alignment weights
 c_i = (omega_hat . e_i)^2 that are produced by the restricted-Euler terms of the
@@ -34,6 +35,10 @@ code/
   re_check.py        check of the current formula against direct restricted-Euler evolution
   figures.py         figures of the manuscript
   run_all.py         runs everything
+  revision_analyses.py  analyses added in revision (analysis plan 5): spatial dependence
+                     between cutouts, robustness to spatial grouping, N_2 under
+                     trimming, characterisation of the 2<-3 tail
+  appendix_b_tables.py  Tables 6 and 7 of the revised manuscript from the result files
 prereg/              English renderings of the locked analysis plans, with checksums
 results/             machine-written result files and figures produced by run_all.py
 CHECKSUMS.sha256     SHA-256 of every file in this repository
@@ -48,11 +53,14 @@ JHTDB client `givernylocal` (`pip install -r requirements.txt`).
 cd code
 JHTDB_TOKEN=<your token> python fetch_data.py --data-dir ../data
 python run_all.py --data-dir ../data --out-dir ../results
+python revision_analyses.py --results ../results --data-dir ../data --out ../results
+python appendix_b_tables.py --results ../results
 ```
 
 The download is about 1.5 GB (60 velocity cutouts of 128^3 and 120 channel
-blocks of 2000 points). The analysis takes about one hour on a desktop computer.
-All random draws are seeded; `run_all.py` reproduces the files in `results/`.
+blocks of 2000 points). The analysis takes about one hour on a desktop computer,
+and the revision analyses about half an hour more. All random draws are seeded;
+`run_all.py` and `revision_analyses.py` reproduce the files in `results/`.
 
 ## Where the numbers of the manuscript come from
 
@@ -70,14 +78,22 @@ All random draws are seeded; `run_all.py` reproduces the files in `results/`.
 | gates | `results/gates.json` | |
 | appendix A check | `results/restricted_euler_check.json` | |
 | Figures 1-8, S1 | `results/figures/` | |
+| Table 6 (numerical variations) | `results/dense_results.json` | `resolution`; printed by `code/appendix_b_tables.py` |
+| Table 7 (relative divergence) | `results/gates.json` | per-cutout gate values; printed by `code/appendix_b_tables.py` |
+| Table 8 (N_2 under trimming) | `results/revision_analyses.json` | `B1` |
+| Table 9 (spatial units), Section 4.8 | `results/revision_analyses.json` | `A` (`geometry`, `dependence`, `robustness`) |
+| Section 3.1 (distances between cutouts) | `results/revision_analyses.json` | `A.geometry` |
+| Section 4.6 (the 2<-3 tail) | `results/revision_analyses.json` | `B2` |
 
 ## Analysis plans
 
 The analyses were specified in advance in four documents that were hash-locked
-before the corresponding data were downloaded. English renderings and the
-checksums of the originals are in `prereg/`; see `prereg/NOTE_ON_CHECKSUMS.md`.
-Quantities that were derived after the measurements (edge asymmetry, net drifts,
-cycle component, stretching-efficiency rate) are labelled as such in the
+before the corresponding data were downloaded. A fifth document specifies the
+analyses added in revision; it was hash-locked together with its analysis script
+before they were run. English renderings and the checksums of the originals are
+in `prereg/`; see `prereg/NOTE_ON_CHECKSUMS.md`. Quantities that were derived
+after the measurements (edge asymmetry, net drifts, cycle component,
+stretching-efficiency rate) and the revision analyses are labelled as such in the
 manuscript.
 
 ## Data
